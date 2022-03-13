@@ -19,9 +19,11 @@ router.route('/:id')
     .put(updateThoughtById)
     .delete(deleteThoughtById);
 
-//routes for friend data
-router.route('/:thoughtId/friends/:friendId')
+//routes for reaction data
+router.route('/:thoughtId/reactions')
     .post(addReactionToThought)
+    
+router.route('/:thoughtId/reactions/:reactionId')
     .delete(deleteReactionFromThought);
 
     
