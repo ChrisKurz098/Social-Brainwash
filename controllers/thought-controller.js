@@ -7,7 +7,7 @@ const thoughtController = {
     addThought({ body }, res) {
         Thought.create(body)
             .then(dbThoughtData => res.json(dbThoughtData))
-            .catch(res.status(500).json(err));
+            .catch(err => res.status(500).json(err));
     },
 
     //get all Thoughts
@@ -15,7 +15,7 @@ const thoughtController = {
         Thought.find({})
             .sort({ _id: -1 })
             .then(dbThoughtData => res.json(dbThoughtData))
-            .catch(res.status(500).json(err));
+            .catch(err => res.status(500).json(err));
     },
 
     //get a Thought by _id
@@ -25,7 +25,7 @@ const thoughtController = {
                 if (!dbThoughtData) res.status(404).json({ message: 'No Thought found at that ID' });
                 res.json(dbThoughtData);
             })
-            .catch(res.status(500).json(err));
+            .catch(err => res.status(500).json(err));
     },
 
     //update Thought by ID
@@ -35,7 +35,7 @@ const thoughtController = {
                 if (!dbThoughtData) res.status(404).json({ message: 'No Thought found at that ID' });
                 res.json(dbThoughtData);
             })
-            .catch(res.status(500).json(err));
+            .catch(err => res.status(500).json(err));
     },
 
     //delete Thought by ID
@@ -45,7 +45,7 @@ const thoughtController = {
                 if (!dbThoughtData) res.status(404).json({ message: 'No Thought found at that ID' });
                 res.json(dbThoughtData);
             })
-            .catch(res.status(500).json(err));
+            .catch(err => res.status(500).json(err));
     },
 
 
@@ -53,7 +53,7 @@ const thoughtController = {
     ///api/thoughts/:thoughtId/reactions
 
     //add thought to user
-    addFriendToUser({ body, params }, res) {
+    addReactionToThought({ body, params }, res) {
         User.findByIdAndUpdate({ _id: params.thoughtId },
             { $push: { thoughts: body } },
             { new: true })
@@ -61,11 +61,11 @@ const thoughtController = {
                 if (!dbThoughtData) res.status(404).json({ message: 'No Thought found at that ID' });
                 res.json(dbThoughtData);
             })
-            .catch(res.status(500).json(err));
+            .catch(err => res.status(500).json(err));
     },
 
     //delete thought from user
-    addFriendToUser({ params }, res) {
+    deleteReactionFromThought({ params }, res) {
         User.findByIdAndUpdate({ _id: params.thoughtId },
             { $pull: { friends: params.reactionId } },
             { new: true })
@@ -73,7 +73,7 @@ const thoughtController = {
                 if (!dbThoughtData) res.status(404).json({ message: 'Unable to find data to delete' });
                 res.json(dbThoughtData);
             })
-            .catch(res.status(500).json(err));
+            .catch(err => res.status(500).json(err));
     }
 
 }
